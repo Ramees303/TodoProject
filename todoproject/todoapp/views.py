@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView,DeleteView
 
 from todoapp.forms import TodoForm
 from todoapp.models import Task
@@ -22,12 +22,11 @@ class TaskUpdateview(UpdateView):
     template_name = 'update.html'
     context_object_name = 'task'
     fields = ['name','priority','date']
+    success_url=reverse_lazy('cbvhome')
 
-    def get_success_url(self):
-        return reverse_lazy('cbvdetail',kwargs={'pk':self.object.id})
-class TaskDeleteview(TaskDetailview):
+class TaskDeleteview(DeleteView):
     model = Task
-    template_name = 'delete'
+    template_name = 'delete.html'
     context_object_name = 'task'
     success_url=reverse_lazy('cbvhome')
 def add(request):
